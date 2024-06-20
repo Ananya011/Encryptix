@@ -1,0 +1,25 @@
+print("Welcome to SimpleChatBot! You can call me Sophie")
+print("Type 'bye' to end the conversation.")
+
+while True:
+    user_input = input("You: ")
+
+    user_input = user_input.lower()
+
+    if user_input == 'bye':
+        print("Sophie: Goodbye! If you have more questions, feel free to ask.")
+        break
+    elif 'hello' in user_input or 'hi' in user_input or 'hola' in user_input:
+        print("Sophie: Hello! How are you?")
+    elif 'how are you' in user_input or 'how are you doing'in user_input:
+        print("Sophie: I'm just a computer program, but thanks for asking!")
+    elif 'good' in user_input or 'im good' in user_input or 'im doing good' in user_input:
+        print("Sophie: That's great to  hear!")
+    elif 'your name' in user_input or 'what is your name' in user_input:
+        print("Sophie: My name is Sophie. I'm a ChatBot. Nice to meet you!")
+    elif 'age' in user_input or 'your age' in user_input:
+        print("Sophie: I don't have an age. I'm a program.")
+    elif 'bye' in user_input:
+        print("Sophie: Goodbye! If you have more questions, feel free to ask.")
+    else:
+        print("Sophie: I'm sorry, I didn't understand that. Can you please rephrase or ask another question?")
