@@ -1,0 +1,126 @@
+import pandas as pd
+
+bookdata = {
+    'title': [
+        'The Great Gatsby', 'To Kill a Mockingbird', '1984', 
+        'Pride and Prejudice', 'The Catcher in the Rye', 'The Hobbit', 
+        'Fahrenheit 451', 'Moby-Dick', 'The Odyssey', 'Crime and Punishment',
+        'The Fault in Our Stars', 'Circe', 'Red, White & Royal Blue', 
+        'A Man Called Ove', 'I Fell in Love with Hope', 'The Notebook', 
+        'Better than the Movies', 'Jane Eyre', 'The Bell Jar', 'Loveless', 
+        'The Song of Achilles', 'The Seven Husbands of Evelyn Hugo',
+        'Harry Potter and the Sorcerer\'s Stone', 'The Lord of the Rings', 
+        'The Hunger Games', 'Twilight', 'The Da Vinci Code', 'The Alchemist', 
+        'The Book Thief', 'The Chronicles of Narnia', 'Divergent', 
+        'The Girl on the Train', 'Gone Girl', 'The Maze Runner', 
+        'The Kite Runner', 'Memoirs of a Geisha', 'Life of Pi', 
+        'The Help', 'Water for Elephants', 'The Lovely Bones', 
+        'The Road', 'Slaughterhouse-Five', 'Catch-22', 'The Handmaid\'s Tale', 
+        'Brave New World', 'The Shining', 'The Hitchhiker\'s Guide to the Galaxy',
+        'Ender\'s Game', 'The Giver', 'The Secret Life of Bees'
+    ],
+    'author': [
+        'F. Scott Fitzgerald', 'Harper Lee', 'George Orwell', 
+        'Jane Austen', 'J.D. Salinger', 'J.R.R. Tolkien', 
+        'Ray Bradbury', 'Herman Melville', 'Homer', 'Fyodor Dostoevsky',
+        'John Green', 'Madeline Miller', 'Casey McQuiston', 
+        'Fredrik Backman', 'L.N. Kriel', 'Nicholas Sparks', 
+        'Lynn Painter', 'Charlotte Brontë', 'Sylvia Plath', 'Alice Oseman', 
+        'Madeline Miller', 'Taylor Jenkins Reid',
+        'J.K. Rowling', 'J.R.R. Tolkien', 'Suzanne Collins', 
+        'Stephenie Meyer', 'Dan Brown', 'Paulo Coelho', 
+        'Markus Zusak', 'C.S. Lewis', 'Veronica Roth', 
+        'Paula Hawkins', 'Gillian Flynn', 'James Dashner', 
+        'Khaled Hosseini', 'Arthur Golden', 'Yann Martel', 
+        'Kathryn Stockett', 'Sara Gruen', 'Alice Sebold', 
+        'Cormac McCarthy', 'Kurt Vonnegut', 'Joseph Heller', 
+        'Margaret Atwood', 'Aldous Huxley', 'Stephen King', 
+        'Douglas Adams', 'Orson Scott Card', 'Lois Lowry', 'Sue Monk Kidd'
+    ],
+    'genre': [
+        'Fiction', 'Fiction', 'Dystopian', 'Romance', 'Fiction', 
+        'Fantasy', 'Dystopian', 'Adventure', 'Epic', 'Crime',
+        'Romance', 'Fantasy', 'Romance', 'Fiction', 'Romance', 
+        'Romance', 'Romance', 'Romance', 'Fiction', 'Fiction', 
+        'Romance', 'Fiction',
+        'Fantasy', 'Fantasy', 'Dystopian', 'Romance', 'Thriller', 
+        'Philosophical', 'Historical', 'Fantasy', 'Dystopian', 
+        'Thriller', 'Thriller', 'Dystopian', 'Fiction', 'Historical', 
+        'Adventure', 'Historical', 'Romance', 'Fiction', 'Dystopian', 
+        'Science Fiction', 'Satire', 'Dystopian', 'Science Fiction', 
+        'Horror', 'Science Fiction', 'Science Fiction', 'Dystopian', 'Fiction'
+    ],
+    'description': [
+        'A novel set in the Roaring Twenties that tells the story of Jay Gatsby and his unrequited love for Daisy Buchanan.',
+        'A novel about the serious issues of rape and racial inequality, but it is also full of warmth and humor.',
+        'A novel presenting a dystopian future under a totalitarian regime led by the Party and its leader, Big Brother.',
+        'A romantic novel that charts the emotional development of the protagonist Elizabeth Bennet.',
+        'A novel about the teenage angst and alienation of Holden Caulfield, a young man who leaves his prep school and goes underground in New York City for three days.',
+        'A fantasy novel that follows the quest of Bilbo Baggins, who joins a group of dwarves on a journey to reclaim their mountain home and treasure from the dragon Smaug.',
+        'A novel about a future American society where books are outlawed and "firemen" burn any that are found.',
+        'A novel about the obsessive quest of Ahab, captain of the whaler Pequod, for revenge against Moby Dick, a white whale.',
+        'An epic Greek poem attributed to Homer, detailing the journey of Odysseus as he returns home from the Trojan War.',
+        'A novel about the mental anguish and moral dilemmas of Rodion Raskolnikov, an impoverished ex-student who kills a pawnbroker for her cash.',
+        'A novel about the life of a teenage girl, Hazel Grace Lancaster, who has cancer, and her relationship with a boy named Augustus Waters.',
+        'A novel about the goddess Circe, who is banished to the island of Aiaia where she hones her occult craft.',
+        'A novel about the relationship between the son of the President of the United States and the Prince of Wales.',
+        'A novel about the grumpy yet loveable Ove, who finds his solitary world turned on its head when a boisterous young family moves in next door.',
+        'A novel about romance, mystery, and the search for a rare flower that leads to self-discovery.',
+        'A novel about the enduring love story of Noah and Allie, spanning decades and illustrating the power of true love.',
+        'A novel about a high school girl who wants to turn her love story into a real-life rom-com.',
+        'A novel about the life of orphan Jane Eyre, her growth to adulthood, and her love for Mr. Rochester.',
+        'A novel about the struggles of a young woman, Esther Greenwood, who is dealing with depression.',
+        'A novel about the struggles of Georgia Warr, who realizes she’s asexual while navigating life and relationships.',
+        'A novel about the love story of Achilles and Patroclus, set against the backdrop of the Trojan War.',
+        'A novel about the fictional biography of Evelyn Hugo, a legendary film actress, and her tumultuous life.',
+        'A novel about a young wizard, Harry Potter, and his adventures at Hogwarts School of Witchcraft and Wizardry.',
+        'An epic fantasy novel about the quest to destroy the One Ring and the journey of the Fellowship.',
+        'A novel set in a dystopian future where children are selected to participate in a televised death match.',
+        'A romance novel about the relationship between a human girl, Bella, and a vampire, Edward.',
+        'A thriller novel about the search for the secret behind a mysterious code hidden in the works of Leonardo da Vinci.',
+        'A philosophical novel about a shepherd named Santiago and his journey to find a worldly treasure.',
+        'A historical novel about a young girl, Liesel, living in Nazi Germany who finds solace in stealing and reading books.',
+        'A fantasy series about the adventures of four siblings in the magical land of Narnia.',
+        'A dystopian novel about a society divided into factions and the story of Tris, who doesn’t fit into any one faction.',
+        'A psychological thriller about a woman who sees something shocking while on her daily train ride.',
+        'A psychological thriller about the mysterious disappearance of Amy Dunne and the subsequent investigation.',
+        'A dystopian novel about a group of boys who are trapped in a maze and their struggle to escape.',
+        'A novel about the unlikely friendship between a wealthy boy, Amir, and the son of his father’s servant, Hassan.',
+        'A historical novel about the life of a young girl who becomes a geisha in pre-World War II Japan.',
+        'A novel about the adventures of a boy named Pi, who survives a shipwreck and is left stranded on a lifeboat with a Bengal tiger.',
+        'A historical novel about African American maids working in white households in Jackson, Mississippi, during the early 1960s.',
+        'A novel about the romance and struggles of Jacob Jankowski, who joins a traveling circus during the Great Depression.',
+        'A novel about a young girl, Susie Salmon, who is murdered and watches from heaven as her family and friends cope with her loss.',
+        'A novel about a father and his young son who journey across a post-apocalyptic landscape.',
+        'A science fiction novel about the experiences of Billy Pilgrim, a soldier who becomes "unstuck in time."',
+        'A novel about the experiences of Yossarian, a bombardier in World War II, and the absurdity of war.',
+        'A dystopian novel about a totalitarian society in which women are subjugated.',
+        'A dystopian novel about a future society driven by technology and conditioned by powerful psychological techniques.',
+        'A horror novel about a family that takes care of an isolated hotel with a sinister presence.',
+        'A science fiction series about the adventures of Arthur Dent, a hapless human who is swept off Earth before it is destroyed.',
+        'A science fiction novel about a young boy, Ender Wiggin, who is recruited to save the world from an alien threat.',
+        'A dystopian novel about a young boy, Jonas, who lives in a seemingly perfect society.',
+        'A novel about a young girl who is taken in by three beekeeping sisters and learns about the secret of her mother’s past.'
+    ]
+}
+
+books_df = pd.DataFrame(bookdata)
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(books_df['description'])
+
+print(tfidf_matrix.shape)  
+from sklearn.metrics.pairwise import linear_kernel
+
+cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+
+def get_recommendations(title, cosine_sim=cosine_sim):
+    idx = books_df.index[books_df['title'] == title].tolist()[0]
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    sim_scores = sim_scores[1:6]  
+    book_indices = [i[0] for i in sim_scores]
+    return books_df['title'].iloc[book_indices]
+
+print(get_recommendations('The Fault in Our Stars'))
